@@ -42,3 +42,20 @@ or this is how I was able to generate a binary `.wasm` file from a `.wat` textua
 -rw-r--r--   1 vasilegorcinschi vasilegorcinschi   41 Jan 21 17:25 sum.wasm
 -rw-rw-r--   1 vasilegorcinschi vasilegorcinschi  145 Jan 17 17:06 sum.wat
 ```
+
+## Running the development server
+
+```shell
+[nix-shell:~/repos/wasm_snake_game_udemy/www]$ npm run dev
+
+> www@1.0.0 dev
+> webpack-dev-server
+
+<i> [webpack-dev-server] Project is running at:
+<i> [webpack-dev-server] Loopback: http://localhost:8080/, http://[::1]:8080/
+<i> [webpack-dev-server] On Your Network (IPv4): http://172.18.0.1:8080/
+<i> [webpack-dev-server] Content not from webpack is served from '/home/vasilegorcinschi/repos/wasm_snake_game_udemy/www/public' directory
+asset index.js 166 KiB [emitted] (name: main)
+runtime modules 27.4 KiB 12 modules
+...
+```

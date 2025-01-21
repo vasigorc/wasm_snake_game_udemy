@@ -1,4 +1,4 @@
-const path = require("fs");
+const path = require("path");
 
 module.exports = {
   entry: "./index.js", // our entry point file
