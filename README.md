@@ -23,7 +23,7 @@ info: default toolchain set to 'stable-x86_64-unknown-linux-gnu'
 
   stable-x86_64-unknown-linux-gnu unchanged - rustc 1.79.0 (129f3b996 2024-06-10)
 
-[nix-shell:~/repos/wasm_snake_game_udemy]$ 
+[nix-shell:~/repos/wasm_snake_game_udemy]$
 ```
 
 Then I can use it, for example, to generate a NPM project (actually required from within `www` directory):
@@ -58,4 +58,20 @@ or this is how I was able to generate a binary `.wasm` file from a `.wat` textua
 asset index.js 166 KiB [emitted] (name: main)
 runtime modules 27.4 KiB 12 modules
 ...
+```
+
+## Building the app
+
+This will pack everything together under `www/public` folder:
+
+```bash
+npm run build
+
+> www@1.0.0 build
+> webpack build
+
+asset index.js 2.54 KiB [emitted] (name: main)
+asset index.html 394 bytes [emitted] [from: index.html] [copied]
+./index.js 1.32 KiB [built] [code generated]
+webpack 5.97.1 compiled successfully in 48 ms
 ```
