@@ -16,31 +16,13 @@ I've preferred using Nix shell: specifically my dynamic Nix shell environment co
 TL;DR this is how I have all of the required technology with a single command:
 
 ```shell
-~/repos/bash-utils/nix/dynamic-nix-shell.sh compiled js
-unpacking 'https://github.com/NixOS/nixpkgs/archive/107d5ef05c0b1119749e381451389eded30fb0d5.tar.gz' into the Git cache...
-info: using existing install for 'stable-x86_64-unknown-linux-gnu'
-info: default toolchain set to 'stable-x86_64-unknown-linux-gnu'
-
-  stable-x86_64-unknown-linux-gnu unchanged - rustc 1.79.0 (129f3b996 2024-06-10)
-
-[nix-shell:~/repos/wasm_snake_game_udemy]$
+nix-shell ~/repos/bash-utils/nix/combined.nix
 ```
 
 Then I can use it, for example, to generate a NPM project (actually required from within `www` directory):
 
 ```shell
 [nix-shell:~/repos/wasm_snake_game_udemy]$ npm install --save-dev webpack-dev-server
-```
-
-or this is how I was able to generate a binary `.wasm` file from a `.wat` textual file for WebAssembly:
-
-```shell
-[nix-shell:~/repos/wasm_snake_game_udemy]$ cd www
-
-[nix-shell:~/repos/wasm_snake_game_udemy/www]$ wat2wasm sum.wat
-[nix-shell:~/repos/wasm_snake_game_udemy/www]$ ls -halF | grep "sum.*"
--rw-r--r--   1 vasilegorcinschi vasilegorcinschi   41 Jan 21 17:25 sum.wasm
--rw-rw-r--   1 vasilegorcinschi vasilegorcinschi  145 Jan 17 17:06 sum.wat
 ```
 
 ## Running the development server
@@ -75,3 +57,36 @@ asset index.html 394 bytes [emitted] [from: index.html] [copied]
 ./index.js 1.32 KiB [built] [code generated]
 webpack 5.97.1 compiled successfully in 48 ms
 ```
+
+## WAT - WASM files
+
+To generate a `.wasm` file from a `.wat` file use `wat2wasm` file:
+
+```shell
+wat2wasm hellolog.wat
+```
+
+In order to analyze the binary `.wasm` file, use `wasm-objdump` tool, e.g.:
+
+```shell
+wasm-objdump -x sum.wasm
+
+sum.wasm: file format wasm 0x1
+
+Section Details:
+
+Type[2]:
+ - type[0] () -> nil
+ - type[1] (i32, i32) -> i32
+Import[2]:
+ - func[0] sig=0 <console.log> <- console.log
+ - func[1] sig=0 <console.error> <- console.error
+Function[1]:
+ - func[2] sig=1 <sum>
+Export[1]:
+ - func[2] <sum> -> "sum"
+Code[1]:
+ - func[2] size=11 <sum>
+```
+
+Both `wat2wasm` and `wasm-objdump` are available through Nix, but can alternatively installed separately.

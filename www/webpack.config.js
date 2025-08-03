@@ -14,6 +14,7 @@ module.exports = {
       patterns: [
         // copy it to the public folder
         { from: "./index.html", to: "./" },
+        { from: "./sum.wasm", to: "./" },
       ],
     }),
   ],
