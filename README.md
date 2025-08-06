@@ -58,9 +58,9 @@ asset index.html 394 bytes [emitted] [from: index.html] [copied]
 webpack 5.97.1 compiled successfully in 48 ms
 ```
 
-## WAT - WASM files
+### WAT - WASM files
 
-To generate a `.wasm` file from a `.wat` file use `wat2wasm` file:
+At the stage of introduction to WebAsembly, to generate a `.wasm` file from a `.wat` file we used `wat2wasm` file:
 
 ```shell
 wat2wasm hellolog.wat
@@ -90,3 +90,40 @@ Code[1]:
 ```
 
 Both `wat2wasm` and `wasm-objdump` are available through Nix, but can alternatively installed separately.
+
+### wasm-pack
+
+`wasm-pack` (installed via `cargo install wasm-pack --force`) is a tool that was used to compile
+🦀 code into JavaScript target:
+
+```bash
+wasm-pack build --target web
+[INFO]: 🎯  Checking for the Wasm target...
+[INFO]: 🌀  Compiling to Wasm...
+    ...
+   Compiling wasm_snake_game_udemy v0.1.0 (/home/vasilegorcinschi/repos/wasm_snake_game_udemy)
+    Finished `release` profile [optimized] target(s) in 2.51s
+[INFO]: ⬇️  Installing wasm-bindgen...
+[INFO]: Optimizing wasm binaries with `wasm-opt`...
+[INFO]: Optional fields missing from Cargo.toml: 'description', 'repository', and 'license'. These are not necessary, but recommended
+[INFO]: ✨   Done in 7.63s
+[INFO]: 📦   Your wasm pkg is ready to publish at /home/vasilegorcinschi/repos/wasm_snake_game_udemy/pkg.
+```
+
+The Wasm package would contain the following files as the result of the previous command:
+
+```bash
+ls -lah pkg
+total 60K
+drwxr-xr-x 2 vasilegorcinschi vasilegorcinschi 4.0K Aug  5 23:13 .
+drwxrwxr-x 7 vasilegorcinschi vasilegorcinschi 4.0K Aug  5 23:17 ..
+-rw-r--r-- 1 vasilegorcinschi vasilegorcinschi    1 Aug  5 23:13 .gitignore
+-rw-r--r-- 1 vasilegorcinschi vasilegorcinschi  321 Aug  5 23:13 package.json
+-rw-rw-r-- 1 vasilegorcinschi vasilegorcinschi 2.6K Aug  5 23:13 README.md
+-rw-r--r-- 1 vasilegorcinschi vasilegorcinschi  23K Aug  5 23:13 wasm_snake_game_udemy_bg.wasm
+-rw-r--r-- 1 vasilegorcinschi vasilegorcinschi  386 Aug  5 23:13 wasm_snake_game_udemy_bg.wasm.d.ts
+-rw-r--r-- 1 vasilegorcinschi vasilegorcinschi 1.4K Aug  5 23:13 wasm_snake_game_udemy.d.ts
+-rw-r--r-- 1 vasilegorcinschi vasilegorcinschi 5.5K Aug  5 23:13 wasm_snake_game_udemy.js
+```
+
+- All of the code is automatically marked to be ignored in the generated `.gitignore` file.

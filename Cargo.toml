@@ -4,3 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+wasm-bindgen = "0.2.100"
+
+[lib]
+crate-type = [
+  "cdylib",
+] # cdylib are primarily designed for building shared libraries, e.g. with integration with the external languages, like JS in our case

@@ -1,14 +1,7 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+use wasm_bindgen::prelude::*;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+// we need to mark `pub` functions that we want to export to JavaScript
+#[wasm_bindgen]
+pub fn greet(name: &str) {
+    println!("Hi there {name}");
 }
