@@ -91,6 +91,22 @@ Code[1]:
 
 Both `wat2wasm` and `wasm-objdump` are available through Nix, but can alternatively installed separately.
 
+There is also the inverse command that allows you to see the WebAssembly code for a generated `.wasm` file. This could
+be useful when taking a peek into [wasm-bindgen](https://docs.rs/wasm-bindgen/latest/wasm_bindgen/) generated files:
+
+```bash
+wasm2wat pkg/wasm_snake_game_udemy_bg.wasm | tail -9
+  (export "memory" (memory 0))
+  (export "greet" (func 22))
+  (export "__wbindgen_export_0" (table 1))
+  (export "__wbindgen_malloc" (func 31))
+  (export "__wbindgen_realloc" (func 33))
+  (export "__wbindgen_start" (func 0))
+  (elem (;0;) (i32.const 1) func 44 39 34 48 44 8 54 23 55 24 25 13 58 36 26 14 57 19 11 56 47 46 50 27 49 59 35 20 15 18 62 41 51 43 52)
+  (data (;0;) (i32.const 1048576) "Hi there \0a\00\00\00\00\10\00\09\00\00\00\09\00\10\00\01\00\00\00Lazy instance has previously been poisoned\00\00\1c...")
+  (data (;1;) (i32.const 1052036) "\02"))
+```
+
 ### wasm-pack
 
 `wasm-pack` (installed via `cargo install wasm-pack --force`) is a tool that was used to compile
