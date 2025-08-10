@@ -5,14 +5,24 @@ use wee_alloc::WeeAlloc;
 #[global_allocator]
 static ALLOC: WeeAlloc = WeeAlloc::INIT;
 
-// we need to mark `pub` functions that we want to export to JavaScript
 #[wasm_bindgen]
-pub fn greet(name: &str) {
-    alert(name);
+pub struct World {
+    width: usize,
 }
 
 #[wasm_bindgen]
-extern "C" {
-    pub fn alert(s: &str);
+impl World {
+    pub fn new() -> World {
+        World { width: 8 }
+    }
+
+    pub fn width(&self) -> usize {
+        self.width
+    }
 }
 
+impl Default for World {
+    fn default() -> Self {
+        World::new()
+    }
+}
