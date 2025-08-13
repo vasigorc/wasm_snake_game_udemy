@@ -8,15 +8,18 @@ static ALLOC: WeeAlloc = WeeAlloc::INIT;
 #[wasm_bindgen]
 pub struct World {
     width: usize,
+    size: usize,
     snake: Snake,
 }
 
 #[wasm_bindgen]
 impl World {
     pub fn new() -> World {
+        let width = 8;
         World {
-            width: 16,
+            width,
             snake: Snake::new(10),
+            size: width.pow(2),
         }
     }
 
@@ -26,6 +29,11 @@ impl World {
 
     pub fn snake_head_idx(&self) -> usize {
         self.snake.body[0].0
+    }
+
+    pub fn update(&mut self) {
+        let snake_idx = self.snake_head_idx();
+        self.snake.body[0].0 = (snake_idx + 1) % self.size;
     }
 }
 
