@@ -27,5 +27,19 @@ init().then((_) => {
     ctx.stroke();
   }
 
+  function drawSnake() {
+    const snakeIdx = world.snake_head_idx();
+    // two rows below are required to figure out x, y coordinates given 1D storage structure of the world
+    const col = snakeIdx % worldWidth;
+    const row = Math.floor(snakeIdx / worldWidth);
+
+    ctx.beginPath();
+    // the last two params are just the size of the wrapping rectangle
+    ctx.fillRect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+
+    ctx.stroke();
+  }
+
   drawWorld();
+  drawSnake();
 });
