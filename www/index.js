@@ -40,13 +40,23 @@ init().then((_) => {
     ctx.stroke();
   }
 
-  drawWorld();
-  drawSnake();
-
-  setInterval(() => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  function paint() {
     drawWorld();
     drawSnake();
-    world.update();
-  }, 100);
+  }
+
+  function update() {
+    setTimeout(() => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      world.update();
+      paint();
+      // the method takes a callback to invoke before the next repaint
+      // this is prefered instead of `setInterval(() => ..., interval);`
+      // to make the updates more syncrhonized in the browser
+      requestAnimationFrame(update);
+    }, 100);
+  }
+
+  paint();
+  update();
 });
