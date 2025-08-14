@@ -143,3 +143,7 @@ drwxrwxr-x 7 vasilegorcinschi vasilegorcinschi 4.0K Aug  5 23:17 ..
 ```
 
 - All of the code is automatically marked to be ignored in the generated `.gitignore` file.
+
+### TypeScript confirguration
+
+TypeScript confirguration for a `webpack` project was inspired from the official [webpack guide](https://webpack.js.org/guides/typescript/).
