@@ -2,7 +2,10 @@ import init, { World } from "wasm_snake_game_udemy";
 
 init().then((_) => {
   const CELL_SIZE = 10;
-  const world = World.new();
+  const WORLD_WIDTH = 8;
+  const snakeSpawnIdx = Date.now() % Math.pow(WORLD_WIDTH, 2); // random number within the boundaries of our world
+
+  const world = World.new(WORLD_WIDTH, snakeSpawnIdx);
   const worldWidth = world.width();
 
   const canvas = <HTMLCanvasElement>document.getElementById("snake-canvas");
@@ -46,6 +49,7 @@ init().then((_) => {
   }
 
   function update() {
+    const fps = 3; // fps - frames per second
     setTimeout(() => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       world.update();
@@ -54,7 +58,7 @@ init().then((_) => {
       // this is prefered instead of `setInterval(() => ..., interval);`
       // to make the updates more syncrhonized in the browser
       requestAnimationFrame(update);
-    }, 100);
+    }, 1000 / fps);
   }
 
   paint();
