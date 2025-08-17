@@ -1,4 +1,4 @@
-import init, { World } from "wasm_snake_game_udemy";
+import init, { World, Direction } from "wasm_snake_game_udemy";
 
 init().then((_) => {
   const CELL_SIZE = 10;
@@ -13,6 +13,24 @@ init().then((_) => {
 
   canvas.height = worldWidth * CELL_SIZE;
   canvas.width = worldWidth * CELL_SIZE;
+
+  // handle key down events
+  document.addEventListener("keydown", (event) => {
+    switch (event.code) {
+      case "ArrowUp":
+        world.change_snake_direction(Direction.Up);
+        break;
+      case "ArrowRight":
+        world.change_snake_direction(Direction.Right);
+        break;
+      case "ArrowDown":
+        world.change_snake_direction(Direction.Down);
+        break;
+      case "ArrowLeft":
+        world.change_snake_direction(Direction.Left);
+        break;
+    }
+  });
 
   function drawWorld() {
     ctx.beginPath();
