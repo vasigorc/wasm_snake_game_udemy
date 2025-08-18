@@ -26,7 +26,7 @@ impl World {
     pub fn new(width: usize, snake_idx: usize) -> World {
         World {
             width,
-            snake: Snake::new(snake_idx),
+            snake: Snake::new(snake_idx, 3),
             size: width.pow(2),
         }
     }
@@ -79,9 +79,12 @@ struct Snake {
 }
 
 impl Snake {
-    fn new(spawn_index: usize) -> Snake {
+    fn new(spawn_index: usize, size: usize) -> Snake {
+        let body = (0..size)
+            .map(|index| SnakeCell(spawn_index - index))
+            .collect::<Vec<SnakeCell>>();
         Snake {
-            body: vec![SnakeCell(spawn_index)],
+            body,
             direction: Direction::Down,
         }
     }
