@@ -43,6 +43,19 @@ impl World {
         self.snake.direction = direction;
     }
 
+    pub fn snake_length(&self) -> usize {
+        self.snake.body.len()
+    }
+
+    // cannot return a reference to JS because of borrowing rules
+    // so we will return it as a raw pointer
+    // *const - is a raw pointer
+    // raw pointers are heavily used in the interoperation of languages
+    // borrowing rules don't apply in this case
+    pub fn snake_cells(&self) -> *const SnakeCell {
+        self.snake.body.as_ptr()
+    }
+
     pub fn update(&mut self) {
         let snake_idx = self.snake_head_idx();
 
@@ -71,7 +84,7 @@ impl World {
     }
 }
 
-struct SnakeCell(usize);
+pub struct SnakeCell(usize);
 
 struct Snake {
     body: Vec<SnakeCell>,

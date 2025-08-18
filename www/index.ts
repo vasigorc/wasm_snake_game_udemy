@@ -1,6 +1,6 @@
 import init, { World, Direction } from "wasm_snake_game_udemy";
 
-init().then((_) => {
+init().then((wasm) => {
   const CELL_SIZE = 10;
   const WORLD_WIDTH = 8;
   const snakeSpawnIdx = Date.now() % Math.pow(WORLD_WIDTH, 2); // random number within the boundaries of our world
@@ -13,6 +13,15 @@ init().then((_) => {
 
   canvas.height = worldWidth * CELL_SIZE;
   canvas.width = worldWidth * CELL_SIZE;
+  // get the pointer to the SnakeCell
+  const snakeCellPtr = world.snake_cells();
+  const snakeLength = world.snake_length();
+
+  const snakeCells = new Uint32Array(
+    wasm.memory.buffer, // buffer
+    snakeCellPtr, // byte offset / starting point
+    snakeLength, // length
+  );
 
   // handle key down events
   document.addEventListener("keydown", (event) => {
