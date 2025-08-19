@@ -56,10 +56,12 @@ init().then((wasm) => {
       world.snake_length(), // length
     );
 
-    snakeCells.forEach((cellIdx) => {
+    snakeCells.forEach((cellIdx, iterationIdx) => {
       // two rows below are required to figure out x, y coordinates given 1D storage structure of the world
       const col = cellIdx % worldWidth;
       const row = Math.floor(cellIdx / worldWidth);
+
+      ctx.fillStyle = iterationIdx == 0 ? "#7878db" : "#000000";
 
       ctx.beginPath();
       // the last two params are just the size of the wrapping rectangle
