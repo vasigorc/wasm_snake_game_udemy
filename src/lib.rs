@@ -98,7 +98,7 @@ impl Snake {
             .collect::<Vec<SnakeCell>>();
         Snake {
             body,
-            direction: Direction::Down,
+            direction: Direction::Right,
         }
     }
 }

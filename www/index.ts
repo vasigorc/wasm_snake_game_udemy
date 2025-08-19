@@ -13,15 +13,6 @@ init().then((wasm) => {
 
   canvas.height = worldWidth * CELL_SIZE;
   canvas.width = worldWidth * CELL_SIZE;
-  // get the pointer to the SnakeCell
-  const snakeCellPtr = world.snake_cells();
-  const snakeLength = world.snake_length();
-
-  const snakeCells = new Uint32Array(
-    wasm.memory.buffer, // buffer
-    snakeCellPtr, // byte offset / starting point
-    snakeLength, // length
-  );
 
   // handle key down events
   document.addEventListener("keydown", (event) => {
@@ -58,16 +49,24 @@ init().then((wasm) => {
   }
 
   function drawSnake() {
-    const snakeIdx = world.snake_head_idx();
-    // two rows below are required to figure out x, y coordinates given 1D storage structure of the world
-    const col = snakeIdx % worldWidth;
-    const row = Math.floor(snakeIdx / worldWidth);
+    // get the pointer to the SnakeCell
+    const snakeCells = new Uint32Array(
+      wasm.memory.buffer, // buffer
+      world.snake_cells(), // byte offset / starting point
+      world.snake_length(), // length
+    );
 
-    ctx.beginPath();
-    // the last two params are just the size of the wrapping rectangle
-    ctx.fillRect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+    snakeCells.forEach((cellIdx) => {
+      // two rows below are required to figure out x, y coordinates given 1D storage structure of the world
+      const col = cellIdx % worldWidth;
+      const row = Math.floor(cellIdx / worldWidth);
 
-    ctx.stroke();
+      ctx.beginPath();
+      // the last two params are just the size of the wrapping rectangle
+      ctx.fillRect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+
+      ctx.stroke();
+    });
   }
 
   function paint() {
