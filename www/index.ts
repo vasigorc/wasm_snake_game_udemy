@@ -80,7 +80,7 @@ init().then((wasm) => {
     const fps = 10; // fps - frames per second
     setTimeout(() => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      world.update();
+      world.step();
       paint();
       // the method takes a callback to invoke before the next repaint
       // this is prefered instead of `setInterval(() => ..., interval);`
