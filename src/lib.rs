@@ -57,8 +57,14 @@ impl World {
     }
 
     pub fn step(&mut self) {
+        let temp = self.snake.body.clone();
         let next_cell = self.generate_next_snake_cell();
         self.snake.body[0] = next_cell;
+        let len = self.snake.body.len();
+
+        (1..len).for_each(|i| {
+            self.snake.body[i] = SnakeCell(temp[i - 1].0);
+        });
     }
 
     fn generate_next_snake_cell(&self) -> SnakeCell {
@@ -102,6 +108,7 @@ impl World {
     }
 }
 
+#[derive(Clone)]
 pub struct SnakeCell(usize);
 
 struct Snake {
