@@ -103,6 +103,12 @@ impl World {
         (1..len).for_each(|i| {
             self.snake.body[i] = SnakeCell(temp[i - 1].0);
         });
+
+        if self.reward_cell == self.snake_head_idx() {
+            // Push the new cell to the snake body
+            // In the next iteration of `step` the indices will be spread out correctly again
+            self.snake.body.push(SnakeCell(self.snake.body[1].0));
+        }
     }
 
     fn generate_next_snake_cell(&self, direction: &Direction) -> SnakeCell {
