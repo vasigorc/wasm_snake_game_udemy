@@ -1,3 +1,5 @@
+use std::iter::from_fn;
+
 use wasm_bindgen::prelude::*;
 use wee_alloc::WeeAlloc;
 
@@ -32,12 +34,15 @@ pub struct World {
 #[wasm_bindgen]
 impl World {
     pub fn new(width: usize, snake_idx: usize) -> World {
+        let snake = Snake::new(snake_idx, 3);
         let size = width.pow(2);
-        let reward_cell = rnd(size);
+        let reward_cell = from_fn(|| Some(rnd(size)))
+            .find(|&cell| !snake.body.contains(&SnakeCell(cell)))
+            .unwrap();
 
         World {
             width,
-            snake: Snake::new(snake_idx, 3),
+            snake,
             size,
             next_cell: None,
             reward_cell,
@@ -141,7 +146,7 @@ impl World {
     }
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq)]
 pub struct SnakeCell(usize);
 
 struct Snake {
