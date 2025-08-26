@@ -111,6 +111,8 @@ impl World {
             // Push the new cell to the snake body
             // In the next iteration of `step` the indices will be spread out correctly again
             self.snake.body.push(SnakeCell(self.snake.body[1].0));
+            // generate new reward cell
+            self.reward_cell = World::generate_reward_cell(self.size, &self.snake.body);
         }
     }
 
