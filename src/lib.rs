@@ -36,17 +36,20 @@ impl World {
     pub fn new(width: usize, snake_idx: usize) -> World {
         let snake = Snake::new(snake_idx, 3);
         let size = width.pow(2);
-        let reward_cell = from_fn(|| Some(rnd(size)))
-            .find(|&cell| !snake.body.contains(&SnakeCell(cell)))
-            .unwrap();
 
         World {
             width,
+            reward_cell: World::generate_reward_cell(size, &snake.body),
             snake,
             size,
             next_cell: None,
-            reward_cell,
         }
+    }
+
+    fn generate_reward_cell(max: usize, snake_body: &[SnakeCell]) -> usize {
+        from_fn(|| Some(rnd(max)))
+            .find(|&cell| !snake_body.contains(&SnakeCell(cell)))
+            .unwrap()
     }
 
     pub fn width(&self) -> usize {
