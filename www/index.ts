@@ -9,13 +9,27 @@ init().then((wasm) => {
   const world = World.new(WORLD_WIDTH, snakeSpawnIdx);
   const worldWidth = world.width();
 
+  const gameControlBtn = document.getElementById("game-control-btn");
   const canvas = <HTMLCanvasElement>document.getElementById("snake-canvas");
   const ctx = canvas.getContext("2d");
 
   canvas.height = worldWidth * CELL_SIZE;
   canvas.width = worldWidth * CELL_SIZE;
 
-  // handle key down events
+  gameControlBtn.addEventListener("click", (_) => {
+    const gameStatus = world.get_game_status();
+
+    // None maps to JS' `undefined`
+    if (gameStatus == undefined) {
+      gameControlBtn.textContent = "Playing...";
+      world.start_game();
+      play();
+    } else {
+      // when clicking on Play the second time, browser window will reload
+      location.reload();
+    }
+  });
+
   document.addEventListener("keydown", (event) => {
     switch (event.code) {
       case "ArrowUp":
@@ -90,7 +104,7 @@ init().then((wasm) => {
     drawReward();
   }
 
-  function update() {
+  function play() {
     const fps = 10; // fps - frames per second
     setTimeout(() => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -99,10 +113,9 @@ init().then((wasm) => {
       // the method takes a callback to invoke before the next repaint
       // this is prefered instead of `setInterval(() => ..., interval);`
       // to make the updates more syncrhonized in the browser
-      requestAnimationFrame(update);
+      requestAnimationFrame(play);
     }, 1000 / fps);
   }
 
   paint();
-  update();
 });
