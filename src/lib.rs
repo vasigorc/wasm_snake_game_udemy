@@ -137,6 +137,11 @@ impl World {
                     self.snake.body[i] = SnakeCell(temp[i - 1].0);
                 });
 
+                // check if the new head crashes into its own body - defeat scenario
+                if self.snake.body[1..len].contains(&self.snake.body[0]) {
+                    self.status = Some(GameStatus::Lost)
+                }
+
                 if self.reward_cell == self.snake_head_idx() {
                     if self.snake_length() < self.size {
                         // generate new reward cell

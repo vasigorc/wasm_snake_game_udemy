@@ -84,19 +84,22 @@ init().then((wasm) => {
       world.snake_length(), // length
     );
 
-    snakeCells.forEach((cellIdx, iterationIdx) => {
-      // two rows below are required to figure out x, y coordinates given 1D storage structure of the world
-      const col = cellIdx % worldWidth;
-      const row = Math.floor(cellIdx / worldWidth);
+    snakeCells
+      // need this filtering to prevent snake head being repainted to the tail's cells' color
+      .filter((cellIdx, i) => !(i > 0 && cellIdx === snakeCells[0]))
+      .forEach((cellIdx, iterationIdx) => {
+        // two rows below are required to figure out x, y coordinates given 1D storage structure of the world
+        const col = cellIdx % worldWidth;
+        const row = Math.floor(cellIdx / worldWidth);
 
-      ctx.fillStyle = iterationIdx == 0 ? "#7878db" : "#000000";
+        ctx.fillStyle = iterationIdx == 0 ? "#7878db" : "#000000";
 
-      ctx.beginPath();
-      // the last two params are just the size of the wrapping rectangle
-      ctx.fillRect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+        ctx.beginPath();
+        // the last two params are just the size of the wrapping rectangle
+        ctx.fillRect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE);
 
-      ctx.stroke();
-    });
+        ctx.stroke();
+      });
   }
 
   function drawGameStatus() {
