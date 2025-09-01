@@ -82,6 +82,15 @@ impl World {
         self.status
     }
 
+    pub fn get_game_status_test(&self) -> String {
+        match self.status {
+            Some(GameStatus::Won) => String::from("You have won!"),
+            Some(GameStatus::Lost) => String::from("You have lost!"),
+            Some(GameStatus::Played) => String::from("Playing"),
+            None => String::from("No status"),
+        }
+    }
+
     pub fn change_snake_direction(&mut self, direction: Direction) {
         let next_cell = self.generate_next_snake_cell(&direction);
 
@@ -134,6 +143,7 @@ impl World {
                         self.reward_cell = World::generate_reward_cell(self.size, &self.snake.body);
                     } else {
                         self.reward_cell = 1000;
+                        self.status = Some(GameStatus::Won)
                     }
                     // Push the new cell to the snake body
                     // In the next iteration of `step` the indices will be spread out correctly again
