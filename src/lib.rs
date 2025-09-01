@@ -36,7 +36,7 @@ pub struct World {
     size: usize,
     snake: Snake,
     next_cell: Option<SnakeCell>,
-    reward_cell: usize,
+    reward_cell: Option<usize>,
     status: Option<GameStatus>,
 }
 
@@ -56,17 +56,15 @@ impl World {
         }
     }
 
-    fn generate_reward_cell(max: usize, snake_body: &[SnakeCell]) -> usize {
-        from_fn(|| Some(rnd(max)))
-            .find(|&cell| !snake_body.contains(&SnakeCell(cell)))
-            .unwrap()
+    fn generate_reward_cell(max: usize, snake_body: &[SnakeCell]) -> Option<usize> {
+        from_fn(|| Some(rnd(max))).find(|&cell| !snake_body.contains(&SnakeCell(cell)))
     }
 
     pub fn width(&self) -> usize {
         self.width
     }
 
-    pub fn reward_cell(&self) -> usize {
+    pub fn reward_cell(&self) -> Option<usize> {
         self.reward_cell
     }
 
@@ -142,12 +140,12 @@ impl World {
                     self.status = Some(GameStatus::Lost)
                 }
 
-                if self.reward_cell == self.snake_head_idx() {
+                if self.reward_cell == Some(self.snake_head_idx()) {
                     if self.snake_length() < self.size {
                         // generate new reward cell
                         self.reward_cell = World::generate_reward_cell(self.size, &self.snake.body);
                     } else {
-                        self.reward_cell = 1000;
+                        self.reward_cell = None;
                         self.status = Some(GameStatus::Won)
                     }
                     // Push the new cell to the snake body
