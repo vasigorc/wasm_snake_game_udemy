@@ -104,13 +104,8 @@ init().then((wasm) => {
   }
 
   function drawGameStatus() {
-    const status = world.get_game_status();
     gameStatusElement.textContent = world.get_game_status_test();
     pointsElement.textContent = world.points().toString();
-
-    if (status == GameStatus.Won || status == GameStatus.Lost) {
-      gameControlBtn.textContent = "Replay";
-    }
   }
 
   function paint() {
@@ -121,6 +116,11 @@ init().then((wasm) => {
   }
 
   function play() {
+    const status = world.get_game_status();
+
+    if (status == GameStatus.Won || status == GameStatus.Lost) {
+      gameControlBtn.textContent = "Replay";
+    }
     const fps = 10; // fps - frames per second
     setTimeout(() => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
