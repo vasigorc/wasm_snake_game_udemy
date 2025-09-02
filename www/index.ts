@@ -10,6 +10,7 @@ init().then((wasm) => {
   const worldWidth = world.width();
 
   const gameStatusElement = document.getElementById("game-status");
+  const pointsElement = document.getElementById("points");
   const gameControlBtn = document.getElementById("game-control-btn");
   const canvas = <HTMLCanvasElement>document.getElementById("snake-canvas");
   const ctx = canvas.getContext("2d");
@@ -104,6 +105,7 @@ init().then((wasm) => {
 
   function drawGameStatus() {
     gameStatusElement.textContent = world.get_game_status_test();
+    pointsElement.textContent = world.points().toString();
   }
 
   function paint() {
