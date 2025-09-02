@@ -1,4 +1,4 @@
-import init, { World, Direction } from "wasm_snake_game_udemy";
+import init, { World, Direction, GameStatus } from "wasm_snake_game_udemy";
 import { rnd } from "./utils/rnd";
 
 init().then((wasm) => {
@@ -104,8 +104,13 @@ init().then((wasm) => {
   }
 
   function drawGameStatus() {
+    const status = world.get_game_status();
     gameStatusElement.textContent = world.get_game_status_test();
     pointsElement.textContent = world.points().toString();
+
+    if (status == GameStatus.Won || status == GameStatus.Lost) {
+      gameControlBtn.textContent = "Replay";
+    }
   }
 
   function paint() {
