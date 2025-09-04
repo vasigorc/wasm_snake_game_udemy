@@ -147,3 +147,7 @@ drwxrwxr-x 7 vasilegorcinschi vasilegorcinschi 4.0K Aug  5 23:17 ..
 ### TypeScript confirguration
 
 TypeScript confirguration for a `webpack` project was inspired from the official [webpack guide](https://webpack.js.org/guides/typescript/).
+
+### Production Express server setup
+
+This can be found in [package.json](./package.json) and the server code is in [server/index.js](server/index.js).

@@ -1,0 +1,25 @@
+{
+  "name": "wasm_snake_game_server",
+  "version": "1.0.0",
+  "description": "This is my walk-through of [this Udemy course](https://www.udemy.com/course/rust-webassembly-with-js-ts-the-practical-guide/?couponCode=ST18MT12125CROW) that features creation of a [Snake Game](<https://en.wikipedia.org/wiki/Snake_(video_game_genre)>) using the following technology stack:",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vasigorc/wasm_snake_game_udemy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vasigorc/wasm_snake_game_udemy/issues"
+  },
+  "homepage": "https://github.com/vasigorc/wasm_snake_game_udemy#readme",
+  "dependencies": {
+    "compression": "^1.8.1",
+    "express": "^5.1.0"
+  }
+}
